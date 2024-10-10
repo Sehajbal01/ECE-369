@@ -26,23 +26,23 @@ module ALU32Bit_tb();
 	initial begin
 	A = 4;
 	B = 4;
-	// Test Add (4'b0000)
+    // Test Add
     ALUControl = 4'b0000;
     #100;  // Wait for 100 time units
 
-    // Test Add Immediate (4'b0001)
+    // Test Add Immediate
     ALUControl = 4'b0001;
     #100;
 
-    // Test Subtract (4'b0010)
+    // Test Subtract 
     ALUControl = 4'b0010;
     #100;
 
-    // Test Multiply (4'b0011)
+    // Test Multiply 
     ALUControl = 4'b0011;
     #100;
 
-    // Test And (4'b0100)
+    // Test And 
     ALUControl = 4'b0100;
     #100;
 
