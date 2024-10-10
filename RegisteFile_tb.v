@@ -38,9 +38,7 @@ module RegisterFile_tb();
 	initial begin
 		Clk <= 1'b0;
 		forever #10 Clk <= ~Clk;
-	end
-
-	initial begin
+	
 	// Initialize control signals
         RegWrite = 0;
         WriteRegister = 0;
