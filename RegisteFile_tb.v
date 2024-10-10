@@ -61,9 +61,9 @@ module RegisterFile_tb();
         // Read values back from registers 8 through 25
         
         for (integer i = 8; i <= 25; i = i + 2) begin
-            ReadRegister1 = i;          // Read from the first register
-            ReadRegister2 = i + 1;      // Read from the second register
-            #20;                        // Wait for the next clock cycle
+            ReadRegister1 = i;          
+            ReadRegister2 = i + 1;      
+            #20;                        
             
            
             $display("Read Data from Register %d: %d", ReadRegister1, ReadData1);
