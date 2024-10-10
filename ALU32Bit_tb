@@ -45,5 +45,6 @@ module ALU32Bit_tb();
     // Test And 
     ALUControl = 4'b0100;
     #100;
+    end
 
 endmodule
