@@ -10,7 +10,7 @@ module Mux32Bit2To1(out, inA, inB, sel);
      begin
 	case(sel)
 	1'b0: out = inA;
-	1'b1: sel = inB;
+	1'b1: out = inB;
 	endcase
      end
 
