@@ -1,0 +1,42 @@
+`timescale 1ns / 1ps
+
+
+
+module TopLevel(Reset, Clk, WriteData, PCCounter);
+    input Reset, Clk;
+    output [31:0] WriteData, PCCounter;
+    wire [31:0] Instruction, PCCounter_IF;     
+    wire RegWrite, ALUSrc, RegDst;
+    wire [31:0] ReadData1_ID, ReadData2_ID, SignExtender_ID, Instruction_ID, PCCounter_ID;
+    wire[31:0] PCCounter_EX,ReadData1_EX, ReadData2_EX, SignExtender_EX;
+    wire [31:0] ALUA, ALUB;
+    wire [3:0] ALUControl;
+    wire [31:0] ALUResult_EX, Zero_EX, AddResult_EX, ReadData2_EX;
+    wire [31:0] ALUResult_MEM, Zero_MEM, AddResult_MEM, ReadData2_MEM, ReadData_MEM;
+    wire MemWrite, MemRead;
+    wire [31:0] ALUResult_WB, ReadData_WB;
+    wire MemtoReg, Branch, Jump;
+    wire [31:0] Add_B;
+    wire [1:0] ALUOp;
+    
+    
+    IF_ID IF_ID_1(Instruction, PCCounter_IF, Instruction_ID, PCCounter_ID, Clk);
+    RegisterFile RegisterFile_1(Instruction_ID[25:21], Instruction_ID[20:16], Instruction_ID[15:11], WriteData, RegWrite, Clk, ReadData1_ID, ReadData2_ID);
+    SignExtension SignExtension_1(Instruction_ID[15:0], SignExtender_ID);
+    ID_EX ID_EX_1(PCCounter_ID, PCCounter_EX, ReadData1_ID, ReadData1_EX, ReadData2_ID, ReadData2_EX, SignExtender_ID, SignExtender_EX, Clk);
+    ShiftLeft ShiftLeft_1(SignExtension_EX, Add_B);
+    SLLAdd SLLAdd_1(PCCounter_EX, Add_B, AddResult_EX);
+    MUX32BIT2To1 MUX32BIT2To1_1(ALUB, ReadData2_EX, SignExtension_EX, ALUSrc); 
+    ALU32Bit ALU32Bit_1(ALUControl, ALUA, ALUB, ALUResult_EX, Zero_EX);
+    EX_MEM EX_MEM_1(ALUResult_EX, ALUResult_MEM, Zero_EX, Zero_MEM, AddResult_EX, AddResult_MEM, ReadData2_EX, ReadData2_MEM, Clk);
+    DataMemory DataMemory_1(ALUResult_MEM, ReadData2_MEM, Clk, MemWrite, MemRead, ReadData_MEM);
+    MEM_WB MEM_WB_1(ReadData_MEM, ReadData_WB, ALUResult_MEM, ALUResult_WB, Clk);
+    MUX32BIT2To1 MUX32BIT2To1_2(WriteData, ALUResult_WB, ReadData_WB, MemtoReg);
+    Controller Controller_1(Instruction, RegWrite, ALUSrc, RegDst, MemWrite, MemRead, Branch,  MemtoReg, Jump, ALUOp);
+    
+    
+    
+    
+    
+
+endmodule
