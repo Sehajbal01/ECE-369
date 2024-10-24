@@ -22,35 +22,47 @@
 
 module ALUControl(Instruction, ALUOp, ALUControl);
     input [31:0] Instruction;
-    input [1:0] ALUOp;
-    output reg [3:0] ALUControl;
+    input [3:0] ALUOp;
+    output reg [4:0] ALUControl;
     
     always @(*) begin
     case (ALUOp)
-        2'b00: ALUControl = 0000;
-        2'b01: ALUControl = 0010;
-        default: ALUControl = 1111;
-    endcase
+        4'b0000: ALUControl = 5'b00000; //all storing and loading instructions
+        
+        
+        4'b0001: ALUControl = 5'b01111; //beq
+        4'b0011: ALUControl = 5'b10000; //bne
+        4'b0100: ALUControl = 5'b10001; //bgtz
+        4'b0101: ALUControl = 5'b10010; //blez
+        4'b0110: ALUControl = 5'b10011; //bgez and bltz
+        
+        4'b0010: begin
+            case (Instruction[5:0])
+                6'b100001: ALUControl = 5'b00000;
+                6'b100001: ALUControl = 5'b00000;  // Add
+                6'b100001: ALUControl = 5'b00001;  // Add Immediate
+                6'b100010: ALUControl = 5'b00010;  // Subtract
+                6'b100011: ALUControl = 5'b00011;  // Multiply
+                6'b100100: ALUControl = 5'b00100;  // And
+                6'b100101: ALUControl = 5'b00101;  // And immediate
+                6'b100110: ALUControl = 5'b00110;  // Or
+                6'b100111: ALUControl = 5'b00111;  // Not Or (NOR)
+                6'b101000: ALUControl = 5'b01000;  // Exclusive Or (XOR)
+                6'b101001: ALUControl = 5'b01001;  // Or immediate
+                6'b101010: ALUControl = 5'b01010;  // Exclusive Or immediate
+                6'b101011: ALUControl = 5'b01011;  // Shift left logical
+                6'b101100: ALUControl = 5'b01100;  // Shift right logical
+                6'b101101: ALUControl = 5'b01101;  // Set on less than
+                6'b101110: ALUControl = 5'b01110;  // Set on less than immediate
+                default: ALUControl = 5'b11111;
+            endcase
+        end
+        
+        default: ALUControl = 5'b11111;
+     endcase
     
-    case (Instruction[5:0])
-        6'b100001: ALUControl = 4'b0000;
-        6'b100001: ALUControl = 4'b0000;  // Add
-        6'b100001: ALUControl = 4'b0001;  // Add Immediate
-        6'b100010: ALUControl = 4'b0010;  // Subtract
-        6'b100011: ALUControl = 4'b0011;  // Multiply
-        6'b100100: ALUControl = 4'b0100;  // And
-        6'b100101: ALUControl = 4'b0101;  // And immediate
-        6'b100110: ALUControl = 4'b0110;  // Or
-        6'b100111: ALUControl = 4'b0111;  // Not Or (NOR)
-        6'b101000: ALUControl = 4'b1000;  // Exclusive Or (XOR)
-        6'b101001: ALUControl = 4'b1001;  // Or immediate
-        6'b101010: ALUControl = 4'b1010;  // Exclusive Or immediate
-        6'b101011: ALUControl = 4'b1011;  // Shift left logical
-        6'b101100: ALUControl = 4'b1100;  // Shift right logical
-        6'b101101: ALUControl = 4'b1101;  // Set on less than
-        6'b101110: ALUControl = 4'b1110;  // Set on less than immediate
-    endcase
-    end
+   
+     end
     
     
 endmodule
