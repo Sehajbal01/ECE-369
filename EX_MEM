@@ -1,0 +1,30 @@
+`timescale 1ns / 1ps
+
+module EX_MEM(ALUResult_EX, ALUResult_MEM, Zero_EX, Zero_MEM, AddResult_EX, AddResult_MEM, ReadData2_EX, ReadData2_MEM, Branch1_EX, Branch1_MEM, MemWrite_EX, MemWrite_MEM, MemRead_EX, MemRead_MEM, RegWrite_EX, RegWrite_MEM, MemtoReg_EX, MemtoReg_MEM, ControlWriteData1_EX, ControlWriteData1_MEM, ControlWriteData2_EX, ControlWriteData2_MEM, Clk);          
+
+    input Clk;
+    input Zero_EX, Branch1_EX, MemWrite_EX, MemRead_EX, RegWrite_EX, MemtoReg_EX;
+    input [31:0] ALUResult_EX, AddResult_EX, ReadData2_EX;
+    input [1:0] ControlWriteData1_EX, ControlWriteData2_EX;
+    output reg Zero_MEM, Branch1_MEM, MemWrite_MEM, MemRead_MEM, RegWrite_MEM, MemtoReg_MEM;
+    output reg [1:0] ControlWriteData1_MEM, ControlWriteData2_MEM;
+    output reg [31:0] ALUResult_MEM, AddResult_MEM, ReadData2_MEM;
+    
+    always @(posedge Clk) begin
+        Zero_MEM <= Zero_EX;
+        ALUResult_MEM <= ALUResult_EX;
+        AddResult_MEM <= AddResult_EX;
+        ReadData2_MEM <= ReadData2_EX;
+        Branch1_MEM <= Branch1_EX;
+        MemWrite_MEM <= MemWrite_EX;
+        MemRead_MEM <= MemRead_EX;
+        RegWrite_MEM <= RegWrite_EX;
+        MemtoReg_MEM <= MemtoReg_EX;
+        ControlWriteData1_MEM <= ControlWriteData1_EX;
+        ControlWriteData2_MEM <= ControlWriteData2_EX;
+        
+    end
+
+
+
+endmodule
