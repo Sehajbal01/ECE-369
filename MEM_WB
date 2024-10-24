@@ -1,0 +1,17 @@
+
+module MEM_WB(Clk, PCSrc_MEM, PCSrc_WB, ReadDataMem_MEM, ReadDataMem_WB, ALUresult_MEM, ALUresult_WB, MemToReg_WB);
+
+    input Clk,
+    input PCSrc_MEM;
+    input [31:0] ReadDataMem_MEM, ALUresult_MEM;
+    output reg PCSrc_WB, MemToReg_WB;
+    output reg [31:0] ReadDataMem_WB, ALUresult_WB;
+
+always @(posedge Clk) begin
+
+    PCSrc_MEM <= PCSrc_WB;
+    ReadDataMem_MEM <= ReadDataMem_WB;
+    ALUresult_MEM <= ALUresult_WB;
+end
+
+endmodule
