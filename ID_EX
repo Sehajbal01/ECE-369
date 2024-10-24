@@ -1,0 +1,37 @@
+`timescale 1ns / 1ps
+
+
+
+module ID_EX(PC_ID, PC_EX, ReadData1_ID, ReadData1_EX, ReadData2_ID, ReadData2_EX, SignExtender_ID, SignExtender_EX,
+ Clk, RegWrite_ID, RegWrite_EX, ALUSrc_ID,ALUSrc_EX, RegDst_ID, RegDst_EX, MemWrite_ID, MemWrite_EX, MemRead_ID, MemRead_EX, 
+ Branch_ID, Branch_EX, MemToReg_ID, MemToReg_EX, Jump_ID, Jump_EX, ControlWriteData1_ID, ControlWriteData1_EX, ControlWriteData2_ID,
+ ControlWriteData2_EX, rt_ID, rt_EX, rd_ID, rd_EX
+);
+    input Clk;
+    input [31:0] PC_ID, ReadData1_ID, ReadData2_ID, SignExtender_ID;
+    input [5:0] rt_ID, rd_ID;
+    input RegWrite_ID, ALUSrc_ID, RegDst_ID, MemWrite_ID, MemRead_ID, Branch_ID, MemToReg_ID, Jump_ID, ControlWriteData1_ID, ControlWriteData2_ID;
+    output reg RegWrite_EX, ALUSrc_EX, RegDst_EX, MemWrite_EX, MemRead_EX, Branch_EX, MemToReg_EX, Jump_EX, ControlWriteData1_EX, ControlWriteData2_EX;
+    output reg [31:0] PC_EX, ReadData1_EX, ReadData2_EX, SignExtender_EX;
+    output reg [5:0] rt_EX, rd_EX;
+    
+    always @(posedge Clk) begin
+        PC_EX <= PC_ID;
+        ReadData1_EX <= ReadData1_ID;
+        ReadData2_EX <= ReadData2_ID;
+        SignExtender_EX <= SignExtender_ID;
+        RegWrite_EX <= RegWrite_ID;
+        ALUSrc_EX <= ALUSrc_ID;
+        RegDst_EX <= RegDst_ID;
+        MemWrite_EX <= MemWrite_ID;
+        MemRead_EX <= MemRead_ID;
+        Branch_EX <= Branch_ID;
+        MemToReg_EX <= MemToReg_ID;
+        Jump_EX <= Jump_ID;
+        ControlWriteData1_EX <= ControlWriteData1_ID;
+        ControlWriteData2_EX <= ControlWriteData2_ID;
+        rt_EX <= rt_ID;
+        rd_EX <= rd_ID;
+    end
+    
+endmodule
