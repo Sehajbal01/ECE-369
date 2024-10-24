@@ -1,21 +1,23 @@
+`timescale 1ns / 1ps
 
-module MEM_WB(Clk, PCSrc_MEM, PCSrc_WB, ReadDataMem_MEM, ReadDataMem_WB, ALUresult_MEM, ALUresult_WB, MemToReg_WB);
+module MEM_WB(Clk, PCSrc_MEM, PCSrc_WB, ReadDataMem_MEM, ReadDataMem_WB, ALUresult_MEM, ALUresult_WB, MemToReg_MEM, MemToReg_WB, WriteReg_MEM, WriteReg_WB);
 
-    input Clk,
-    input PCSrc_MEM;
+    input Clk;
+    input PCSrc_MEM, MemToReg_MEM;
     input [31:0] ReadDataMem_MEM, ALUresult_MEM;
-    input [5:0] mux_inp_MEM;
-    output reg [5:0] mux_out_WB;
+    input [4:0] WriteReg_MEM;
     output reg PCSrc_WB, MemToReg_WB;
     output reg [31:0] ReadDataMem_WB, ALUresult_WB;
+    output reg [4:0] WriteReg_WB;
 
-always @(posedge Clk) begin
-
-    PCSrc_MEM <= PCSrc_WB;
-    ReadDataMem_MEM <= ReadDataMem_WB;
-    ALUresult_MEM <= ALUresult_WB;
-    mux_inp_MEM <= mux_out_WB;
-
-end
+    always @(posedge Clk) begin
+    
+        PCSrc_WB <= PCSrc_MEM;
+        ReadDataMem_WB <= ReadDataMem_MEM;
+        ALUresult_WB <= ALUresult_MEM;
+        MemToReg_WB <= MemToReg_MEM;
+        WriteReg_WB <= WriteReg_MEM;
+        
+    end
 
 endmodule
