@@ -1,0 +1,17 @@
+`timescale 1ns / 1ps
+
+
+
+module IF_ID(Instruction_IF, PC_IF, Instruction_ID, PC_ID, Clk);
+    
+    input Clk;
+    input [31:0] Instruction_IF, PC_IF;
+    output reg [31:0] Instruction_ID;
+    output reg [31:0] PC_ID;
+    
+    always @(posedge Clk) begin
+    Instruction_ID <= Instruction_IF;
+    PC_ID <= PC_IF;
+    end
+    
+endmodule
